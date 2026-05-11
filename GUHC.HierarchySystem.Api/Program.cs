@@ -1,5 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using GUHC.HierarchySystem.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensure the Microsoft.EntityFrameworkCore.SqlServer package is referenced in the project.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 
 builder.Services.AddControllers();
