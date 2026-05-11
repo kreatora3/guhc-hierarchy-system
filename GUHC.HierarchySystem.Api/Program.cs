@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using GUHC.HierarchySystem.Infrastructure.Data;
+using GUHC.HierarchySystem.Core.Services;
+using GUHC.HierarchySystem.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
-
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
