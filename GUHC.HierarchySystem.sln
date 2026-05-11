@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUHC.HierarchySystem.Api", "GUHC.HierarchySystem.Api\GUHC.HierarchySystem.Api.csproj", "{E5994BD6-CFF3-4262-87F8-3CC9280C4BFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUHC.HierarchySystem.Core", "GUHC.HierarchySystem.Core\GUHC.HierarchySystem.Core.csproj", "{EC96A241-80AF-4606-8E68-71D0829FDC73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUHC.HierarchySystem.Infrastructure", "GUHC.HierarchySystem.Infrastructure\GUHC.HierarchySystem.Infrastructure.csproj", "{02B57947-386A-429B-B57B-099FC951A7FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUHC.HierarchySystem.ConsoleClient", "GUHC.HierarchySystem.ConsoleClient\GUHC.HierarchySystem.ConsoleClient.csproj", "{310FC3EB-C7D6-48B0-B2BB-62CB239CBFC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUHC.HierarchySystem.Tests", "GUHC.HierarchySystem.Tests\GUHC.HierarchySystem.Tests.csproj", "{184DB626-BE65-47BE-8F37-3775634E295A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5994BD6-CFF3-4262-87F8-3CC9280C4BFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5994BD6-CFF3-4262-87F8-3CC9280C4BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5994BD6-CFF3-4262-87F8-3CC9280C4BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5994BD6-CFF3-4262-87F8-3CC9280C4BFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC96A241-80AF-4606-8E68-71D0829FDC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC96A241-80AF-4606-8E68-71D0829FDC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC96A241-80AF-4606-8E68-71D0829FDC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC96A241-80AF-4606-8E68-71D0829FDC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B57947-386A-429B-B57B-099FC951A7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B57947-386A-429B-B57B-099FC951A7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B57947-386A-429B-B57B-099FC951A7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B57947-386A-429B-B57B-099FC951A7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{310FC3EB-C7D6-48B0-B2BB-62CB239CBFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{310FC3EB-C7D6-48B0-B2BB-62CB239CBFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{310FC3EB-C7D6-48B0-B2BB-62CB239CBFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{310FC3EB-C7D6-48B0-B2BB-62CB239CBFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184DB626-BE65-47BE-8F37-3775634E295A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184DB626-BE65-47BE-8F37-3775634E295A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184DB626-BE65-47BE-8F37-3775634E295A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184DB626-BE65-47BE-8F37-3775634E295A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3ADD439F-49C6-46D9-9DB7-CDC8AC872FCE}
+	EndGlobalSection
+EndGlobal

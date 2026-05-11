@@ -1,0 +1,6 @@
+@GUHC.HierarchySystem.Api_HostAddress = http://localhost:5067
+
+GET {{GUHC.HierarchySystem.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
