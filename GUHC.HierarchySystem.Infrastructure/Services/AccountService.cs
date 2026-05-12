@@ -18,7 +18,10 @@ public class AccountService : IAccountService
 
     public async Task<AccountResponseDto> CreateAccountAsync(string name, int? parentId)
     {
-        // Calculate depth based on parent
+        // Normalize invalid parent IDs to null so root creation works as expected.
+        if (parentId <= 0)
+            parentId = null;
+
         int depth = 1;
         if (parentId.HasValue)
         {
@@ -61,7 +64,7 @@ public class AccountService : IAccountService
             throw new InvalidOperationException($"Account with ID {accountId} not found.");
 
         // Validate: cannot move root account
-        if (account.ParentAccountId == null && newParentId == null)
+        if (account.ParentAccountId == null)
             throw new InvalidOperationException("Root account cannot be moved.");
 
         // Validate: cannot move to a descendant (would create cycle)
@@ -109,7 +112,23 @@ public class AccountService : IAccountService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<AccountTreeResponseDto> GetSubtreeAsync(int accountId)
+    public async Task<AccountResponseDto?> GetAccountAsync(int id)
+    {
+        var account = await _context.Accounts.FindAsync(id);
+        if (account == null)
+            return null;
+
+        int depth = await CalculateDepthAsync(id);
+        return new AccountResponseDto
+        {
+            Id = account.Id,
+            Name = account.Name,
+            ParentId = account.ParentAccountId,
+            Depth = depth
+        };
+    }
+
+    public async Task<AccountTreeResponseDto?> GetSubtreeAsync(int accountId)
     {
         var account = await _context.Accounts
             .AsNoTracking()
@@ -117,7 +136,7 @@ public class AccountService : IAccountService
             .FirstOrDefaultAsync(a => a.Id == accountId);
 
         if (account == null)
-            throw new InvalidOperationException($"Account with ID {accountId} not found.");
+            return null;
 
         int depth = await CalculateDepthAsync(accountId);
         return await BuildTreeAsync(account, depth);

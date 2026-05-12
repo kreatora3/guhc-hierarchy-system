@@ -7,4 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GUHC.HierarchySystem.Core\GUHC.HierarchySystem.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -4,9 +4,10 @@ namespace GUHC.HierarchySystem.Core.Services
 {
     public interface IAccountService
     {
-        Task<AccountResponseDto> CreateAccountAsync(string name, int? parentId);        
+        Task<AccountResponseDto> CreateAccountAsync(string name, int? parentId);
+        Task<AccountResponseDto?> GetAccountAsync(int id);
         Task MoveAccountAsync(int accountId, int? newParentId);
         Task DeleteAccountAsync(int id);
-        Task<AccountTreeResponseDto> GetSubtreeAsync(int id);
+        Task<AccountTreeResponseDto?> GetSubtreeAsync(int id);
     }
 }
