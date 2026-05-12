@@ -130,25 +130,68 @@ public class AccountService : IAccountService
 
     public async Task<AccountTreeResponseDto?> GetSubtreeAsync(int accountId)
     {
-        var account = await _context.Accounts
+        var rootAccount = await _context.Accounts
             .AsNoTracking()
-            .Include(a => a.ChildAccounts)
             .FirstOrDefaultAsync(a => a.Id == accountId);
 
-        if (account == null)
+        if (rootAccount == null)
             return null;
 
         int depth = await CalculateDepthAsync(accountId);
-        return await BuildTreeAsync(account, depth);
+
+        var subtreeAccounts = await LoadSubtreeAccountsAsync(accountId);
+        var childrenLookup = subtreeAccounts
+            .GroupBy(a => a.ParentAccountId!.Value)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        return BuildTree(rootAccount, depth, childrenLookup);
     }
 
-    private async Task<AccountTreeResponseDto> BuildTreeAsync(Account account, int depth)
+    private async Task<List<Account>> LoadSubtreeAccountsAsync(int rootAccountId)
     {
-        var children = await _context.Accounts
-            .AsNoTracking()
-            .Where(a => a.ParentAccountId == account.Id)
-            .ToListAsync();
+        if (_context.Database.IsRelational())
+        {
+            var sql = @";WITH RecursiveAccounts AS
+            (
+                SELECT *
+                FROM Accounts
+                WHERE ParentAccountId = {0}
+                UNION ALL
+                SELECT a.*
+                FROM Accounts a
+                INNER JOIN RecursiveAccounts r ON a.ParentAccountId = r.Id
+            )
+            SELECT *
+            FROM RecursiveAccounts";
 
+            return await _context.Accounts
+                .FromSqlRaw(sql, rootAccountId)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        var descendants = new List<Account>();
+        var parentIds = new List<int> { rootAccountId };
+
+        while (parentIds.Count > 0)
+        {
+            var children = await _context.Accounts
+                .AsNoTracking()
+                .Where(a => a.ParentAccountId.HasValue && parentIds.Contains(a.ParentAccountId.Value))
+                .ToListAsync();
+
+            if (children.Count == 0)
+                break;
+
+            descendants.AddRange(children);
+            parentIds = children.Select(a => a.Id).ToList();
+        }
+
+        return descendants;
+    }
+
+    private AccountTreeResponseDto BuildTree(Account account, int depth, Dictionary<int, List<Account>> childrenLookup)
+    {
         var dto = new AccountTreeResponseDto
         {
             Id = account.Id,
@@ -157,10 +200,12 @@ public class AccountService : IAccountService
             Children = new List<AccountTreeResponseDto>()
         };
 
-        foreach (var child in children)
+        if (!childrenLookup.TryGetValue(account.Id, out var childAccounts))
+            return dto;
+
+        foreach (var child in childAccounts)
         {
-            var childTree = await BuildTreeAsync(child, depth + 1);
-            dto.Children.Add(childTree);
+            dto.Children.Add(BuildTree(child, depth + 1, childrenLookup));
         }
 
         return dto;
